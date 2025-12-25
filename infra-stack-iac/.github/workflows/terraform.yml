@@ -1,0 +1,45 @@
+name: Terraform
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  fmt-validate-plan:
+    runs-on: ubuntu-latest
+    env:
+      TF_TOKEN_app_terraform_io: ${{ secrets.TF_TOKEN_app_terraform_io }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: '1.5.0'
+
+      - name: Terraform - fmt check
+        run: |
+          cd infra-stack-iac
+          terraform fmt -check -recursive
+
+      - name: Terraform - init
+        run: |
+          cd infra-stack-iac
+          terraform init -input=false
+
+      - name: Terraform - validate
+        run: |
+          cd infra-stack-iac
+          terraform validate
+
+      - name: Terraform - plan (dev workspace)
+        env:
+          TF_IN_AUTOMATION: 1
+        run: |
+          cd infra-stack-iac/environments/dev
+          terraform init -input=false
+          terraform plan -input=false
+

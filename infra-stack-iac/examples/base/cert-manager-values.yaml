@@ -1,0 +1,6 @@
+installCRDs: true
+replicaCount: 1
+
+# Minimal configuration for local clusters
+webhook:
+  enabled: true
