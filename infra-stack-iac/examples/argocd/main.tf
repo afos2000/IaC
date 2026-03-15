@@ -2,7 +2,7 @@ module "argocd" {
   source     = "../../modules/kube-helm-chart"
   name       = var.release_name
   chart      = "argo-cd"
-  chart_version = "9.1.7"
+  chart_version = "9.2.1"
   repository = "https://argoproj.github.io/argo-helm/"
   namespace  = var.namespace
   # Use the full values file copied from your previous `stack` repo for a more complete configuration.
