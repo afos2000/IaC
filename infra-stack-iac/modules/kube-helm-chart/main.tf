@@ -3,7 +3,7 @@ resource "helm_release" "this" {
   chart      = var.chart
   repository = var.repository
   namespace  = var.namespace
-  version = var.chart_version
+  version    = var.chart_version
 
   # just assign the list
   values = var.values
